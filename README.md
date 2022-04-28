@@ -18,20 +18,21 @@ The scripts don't need to be installed anywhere specific, just download or clone
 
 ## How to run
 
-Under Linux, PYTHONPATH should be set to the location where gdal_retile.py is found, eg:
+Under Linux, `PYTHONPATH` should be set to the location where `gdal_retile.py` is found, eg:
 
-export PYTHONPATH=/usr/bin
+`export PYTHONPATH=/usr/bin`
 
 To convert a GeoPDF or GeoTIF file to kmz:
 
-python3 pdf2kmz.py -i INPUT_FILE
+`python3 pdf2kmz.py -i INPUT_FILE`
 
-which will output the kmz file in the same directory as INPUT_FILE.
+which will output the kmz file in the same directory as `INPUT_FILE`.
 
 There are plenty of options to refine the conversion, including clipping, tiling, scaling and image quality options.  The defaults should be sufficient, though some clipping option should probably be used to remove unwanted areas of the map.
 
 ## Usage
 
+```
 python3 pdf2kmz.py -h
 Usage: pdf2kmz.py \[options\]
 
@@ -69,6 +70,7 @@ Scaling options:
 Temporary directory options:
        -t TEMP|--tmpdir=TEMP             : temporary directory
        -k|--keep                         : keep temporary files
+```
 
 ## Issues
 
