@@ -80,7 +80,7 @@ The auto-clipping feature `-c` tries to find the outer gridlines of the map and 
 
 # License
 
-pdf2kmz is licensed under the MIT License - see LICENSE.md
+pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE.md)
 
 # Links
 
