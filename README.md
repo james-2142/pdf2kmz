@@ -19,6 +19,7 @@ The scripts don't need to be installed anywhere specific, just download or clone
 ## How to run
 
 Under Linux, PYTHONPATH should be set to the location where gdal_retile.py is found, eg:
+
 export PYTHONPATH=/usr/bin
 
 To convert a GeoPDF or GeoTIF file to kmz:
