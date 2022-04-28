@@ -76,7 +76,7 @@ Temporary directory options:
 
 I've only tested this using Vicmap 20k products with my own Garmin eTrex 20x, your mileage may vary with other maps.
 
-The auto-clipping feature \[-c\] tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work is an option.
+The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work is an option.
 
 # License
 
