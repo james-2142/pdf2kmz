@@ -76,13 +76,13 @@ Temporary directory options:
 
 While pdf2kmz does not itself run in parallel (it is already very quick), if you have a large number of GeoPDF/GeoTIFs to convert then they can be processed simultaneously.
 
-On Windows use Mparallel and run:
+On Windows use `Mparallel.exe` and run:
 
-dir /b .\pdf\*.pdf | Mparallel.exe --stdin --pattern "python3 pdf2kmz.py -i .\pdf\{{0}}" --count=2
+`dir /b .\pdf\*.pdf | Mparallel.exe --stdin --pattern "python3 pdf2kmz.py -i .\pdf\{{0}}" --count=2`
 
-On Linux we can use xargs:
+On Linux we can use `xargs`:
 
-ls ./pdf/*.pdf | xargs -n 1 -P 2 -I {} python3 pdf2kmz.py -i ./pdf/{}
+`ls ./pdf/*.pdf | xargs -n 1 -P 2 -I {} python3 pdf2kmz.py -i ./pdf/{}`
 
 ## Issues
 
