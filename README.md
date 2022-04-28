@@ -72,6 +72,18 @@ Temporary directory options:
        -k|--keep                         : keep temporary files
 ```
 
+## Running in parallel
+
+While pdf2kmz does not itself run in parallel (it is already very quick), if you have a large number of GeoPDF/GeoTIFs to convert then they can be processed simultaneously.
+
+On Windows use Mparallel and run:
+
+dir /b .\pdf\*.pdf | Mparallel.exe --stdin --pattern "python3 pdf2kmz.py -i .\pdf\{{0}}" --count=2
+
+On Linux we can use xargs:
+
+ls ./pdf/*.pdf | xargs -n 1 -P 2 -I {} python3 pdf2kmz.py -i ./pdf/{}
+
 ## Issues
 
 I've only tested this using Vicmap 20k products with my own Garmin eTrex 20x, your mileage may vary with other maps.
@@ -86,6 +98,8 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 
 * You can find this project here: https://github.com/james-2142/pdf2kmz
 * To get OSGeo4W head over to: https://trac.osgeo.org/osgeo4w/
+* Download MParallel portable binary at: https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip
+* To get Linux Mint goto: https://linuxmint.com/download.php
 * An alternative to this project is GarminCustomMaps plugin for QGIS:(https://github.com/NINAnor/GarminCustomMaps
 * How to upload you custom maps and technical details from Garmin: https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9
 
