@@ -84,6 +84,15 @@ On Linux we can use `xargs`:
 
 `ls ./pdf/*.pdf | xargs -n 1 -P 2 -I {} python3 pdf2kmz.py -i ./pdf/{}`
 
+## Testing
+
+Because I don't want you to get lost, you should test that the generated kmz file displays correctly before you use it in the field.
+
+* Load the kmz into Garmins's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to base map or creating a custom map using another method.
+* Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the basemap.
+
+Always have a backup navigation method in the field - electronic devices and batteries fail.
+
 ## Issues
 
 I've only tested this using Vicmap 20k products with my own Garmin eTrex 20x, your mileage may vary with other maps.
