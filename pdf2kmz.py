@@ -2,7 +2,10 @@
 
 from __future__ import print_function
 import os, sys, fnmatch
-from osgeo import gdal
+try:
+	from osgeo import gdal
+except:
+	import gdal
 try:
 	from gdal_retile import main as gdal_retile
 except:
