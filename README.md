@@ -5,7 +5,7 @@ pdf2kmz is a small collection of python scripts that convert a GeoPDF or GeoTIF 
 
 pdf2kmz requires Python, the GDAP-python bindings and the GDAL scripts to run.
 
-On Windows 10, OSGeo4W versions 2.18, 3.18 & 3.24.1 have been tested to work.
+On Windows 10, OSGeo4W Shell versions 2.18, 3.18 & 3.24.1 have been tested to work.
 
 Under Linux, Linux Mint 20.2 has been tested which will require the following installed:
 - Python3
@@ -96,10 +96,9 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 
 # Links
 
-* You can find this project here: https://github.com/james-2142/pdf2kmz
-* To get OSGeo4W head over to: https://trac.osgeo.org/osgeo4w/
-* Download MParallel portable binary at: https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip
-* To get Linux Mint goto: https://linuxmint.com/download.php
-* An alternative to this project is GarminCustomMaps plugin for QGIS:(https://github.com/NINAnor/GarminCustomMaps
-* How to upload you custom maps and technical details from Garmin: https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9
+* You can find this project on [GitHub](https://github.com/james-2142/pdf2kmz)
+* To get OSGeo4W installer head over to their trac [page](https://trac.osgeo.org/osgeo4w/)
+* Download MParallel portable binary [here](https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip)
+* Download Linux Mint [here](https://linuxmint.com/download.php)
+* How to upload your custom maps and technical details from [Garmin](https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9)
 
