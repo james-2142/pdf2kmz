@@ -5,7 +5,9 @@ pdf2kmz is a small collection of python scripts that convert a GeoPDF or GeoTIF 
 
 pdf2kmz requires Python, the GDAP-python bindings and the GDAL scripts to run.
 
-On Windows 10, OSGeo4W Shell versions 2.18, 3.18 & 3.24.1 have been tested to work.
+On Windows 10, QGIS Standalone Installer can be used to install the required dependencies.  This is the recommended method. Versions 2.18.18, 3.18.2 & 3.24.1 have been tested to work.
+
+OSGeo4W Network Installer can also be used to install the necessary dependencies if a custom install of QGIS/OSGeo4W is required.
 
 Under Linux, Linux Mint 20.2 has been tested which will require the following installed:
 - Python3
@@ -106,6 +108,7 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 # Links
 
 * You can find this project on [GitHub](https://github.com/james-2142/pdf2kmz)
+* Download the QGIS Standalone installer [here](https://www.qgis.org/en/site/forusers/download.html)
 * To get OSGeo4W installer head over to their trac [page](https://trac.osgeo.org/osgeo4w/)
 * Download MParallel portable binary [here](https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip)
 * Download Linux Mint [here](https://linuxmint.com/download.php)
