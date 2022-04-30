@@ -14,7 +14,7 @@ Under Linux, Linux Mint 20.2 has been tested which will require the following in
 
 ## Installation
 
-The scripts don't need to be installed anywhere specific, just download or clone the repository to your local machine.
+The scripts don't need to be installed anywhere specific, just download a zip file of the repository or clone it to your local machine.
 
 ## How to run
 
