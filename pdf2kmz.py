@@ -36,7 +36,7 @@ def gdalwarp(ifile,ofile):
 	src = gdal.Open(ifile)
 	# EPSG:54004 == EPSG:3395
 	opt = gdal.WarpOptions(dstSRS="EPSG:3395", resampleAlg="near")
-	gdal.Warp(ofile,ifile,options=opt)
+	gdal.Warp(ofile,src,options=opt)
 
 #gdal_retile
 def gdalretile(ifile,opath,xps,yps):
@@ -73,22 +73,25 @@ def clip(ifile,ofile,xoff,yoff,xsize,ysize,proj):
 	src = gdal.Open(ifile)
 	gdal.Translate(ofile,src,options=opt)
 
-def clipbycutline(ifile,ofile,tempd):
+def clipbycutline(ifile,ofile,tempd,neatline):
 	ds = gdal.Open(ifile)
-	neatline = ds.GetMetadata()['NEATLINE']
 
-	cutline = tempd + os.sep + "cutline.csv"
-	header = ['record','wkt']
-	row = [1,"%s" % neatline]
+	if not neatline:
+		neatline = ds.GetMetadata()['NEATLINE']
+		cutline = tempd + os.sep + "cutline.csv"
+		header = ['record','wkt']
+		row = [1,"%s" % neatline]
 
-	with open(cutline,'w',newline='') as fh:
-		writer = csv.writer(fh)
-		writer.writerow(header)
-		writer.writerow(row)
+		with open(cutline,'w',newline='') as fh:
+			writer = csv.writer(fh)
+			writer.writerow(header)
+			writer.writerow(row)
+	else:
+		cutline = neatline
 
 	opt = gdal.WarpOptions(options="-crop_to_cutline -cutline %s"%cutline)
 	gdal.PushErrorHandler('CPLQuietErrorHandler')
-	gdal.Warp(ofile,ifile,options=opt)
+	gdal.Warp(ofile,ds,options=opt)
 	gdal.PopErrorHandler();
 
 #pdf2tif
@@ -108,6 +111,11 @@ def gdalscale(ifile,ofile,scale,resample_alg):
 	src = gdal.Open(ifile)
 	gdal.Translate(ofile,src,options=opt)
 
+#remove_rotation
+def remove_rotation(ifile,ofile):
+	src = gdal.Open(ifile)
+	gdal.Warp(ofile,src)
+
 def Usage():
 	print("Usage: pdf2kmz.py [options]")
 	print("")
@@ -121,6 +129,7 @@ def Usage():
 	print("Clip options:")
 	print("       -c|--clip                         : auto clip")
 	print("       -n|--neatline                     : use embedded neatline to clip")
+	print("       -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip")
 	print("       --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines")
 	print("       --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates")
 	print("       -b THRESH|--border THRESH         : border threshold for auto clipping (default=100,0-255)")
@@ -158,11 +167,13 @@ def main(args=None):
 	global SQUARE_RATIO
 	global MAX_JPEG_SIZE
 	global BORDER_THRESHOLD
+	global BORDER_OFFSET
 	
 	Timing = False
 	Ifile = False
 	Odir = False
 	Tdir = False
+	Nfile = False
 	Force = False
 	Keep = False
 	AutoClip = False
@@ -176,14 +187,15 @@ def main(args=None):
 	Algorithm = False
 	odir = ""
 	tdir = ""
+	nfile = None
 	btmpdir = None
 	
 	gps_profiles = {'default':100, 'etrex': 100, 'montana':500, 'monterra':99, 'oregon':500,'gpsmap':500}
 	resample_mthds = ["nearest","average","rms","bilinear","cubic","cupicspline","lanczos","mode"]
 
 	try:
-		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:"
-		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin="]
+		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:"
+		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile="]
 		opts, args = getopt.getopt(sys.argv[1:],short_args,long_args)
 	except getopt.GetoptError as err:
 			Usage()
@@ -203,6 +215,9 @@ def main(args=None):
 		elif o in ("-t", "--tmpdir"):
 			Tdir = True
 			tdir = a
+		elif o in ("-N", "--neatlinefile"):
+			Nfile = True
+			nfile = a
 		elif o in ("-f", "--force"):
 			Force = True
 		elif o in ("-k","--keep"):
@@ -325,12 +340,23 @@ def main(args=None):
 		if Verbose:
 			print("Input file = %s" %ifile)
 
+	if Nfile:
+		if not os.path.isfile(nfile):
+			Usage()
+			print("neatline file does not exist: %s" % ifile)
+			return 1
+
 	if (AutoClip and Srcwin) or (AutoClip and Projwin) or (Srcwin and Projwin):
 		Usage()
 		print("only specify one clipping option")
 		return 1
 
 	if (Neatline and Srcwin) or (Neatline and Projwin) or (Neatline and AutoClip):
+		Usage()
+		print("only specify one clipping option")
+		return 1
+
+	if (Nfile and Srcwin) or (Nfile and Projwin) or (Nfile and Neatline) or (Nfile and AutoClip):
 		Usage()
 		print("only specify one clipping option")
 		return 1
@@ -423,7 +449,36 @@ def main(args=None):
 			print("auto clip offset (%d,%d) and size (%d,%d)" % (xoff,yoff,xsize,ysize))
 
 		clip(ifile,ofile,xoff,yoff,xsize,ysize,False)
-	elif Neatline:
+	elif Srcwin:
+		ifile = ofile
+		path = tempd + os.sep + "clipped"
+		if not os.path.isdir(path):
+			os.mkdir(path)
+		name, ext = os.path.splitext(os.path.basename(ifile))
+		ofile = path + os.sep + name + ext
+		xoff, yoff, xsize, ysize = win
+
+		if Verbose:
+			if Projwin:
+				print("clip using projwin offset (%d %d) and size (%d %d)" % (xoff,yoff,xsize,ysize))
+			else:
+				print("clip using srcwin offset (%d %d) and size (%d %d)" % (xoff,yoff,xsize,ysize))
+
+		clip(ifile,ofile,xoff,yoff,xsize,ysize,Projwin)
+
+	if Projwin:
+		ifile = ofile
+		path = tempd + os.sep + "rotated"
+		if not os.path.isdir(path):
+			os.mkdir(path)
+		ofile = path + os.sep + name + ".tif"
+
+		if Verbose:
+			print("Removing rotation from input file")
+
+		remove_rotation(ifile,ofile)
+
+	if Neatline:
 		ifile = ofile
 		path = tempd + os.sep + "clipped"
 		if not os.path.isdir(path):
@@ -434,8 +489,20 @@ def main(args=None):
 		if Verbose:
 			print("Using neatline to clip")
 
-		clipbycutline(ifile,ofile,tempd)
-	elif Srcwin or Projwin:
+		clipbycutline(ifile,ofile,tempd,nfile)
+	elif Nfile:
+		ifile = ofile
+		path = tempd + os.sep + "clipped"
+		if not os.path.isdir(path):
+			os.mkdir(path)
+		name, ext = os.path.splitext(os.path.basename(ifile))
+		ofile = path + os.sep + name + ext
+
+		if Verbose:
+			print("Using neatline csv file to clip")
+
+		clipbycutline(ifile,ofile,tempd,nfile)
+	elif Projwin:
 		ifile = ofile
 		path = tempd + os.sep + "clipped"
 		if not os.path.isdir(path):
@@ -463,6 +530,23 @@ def main(args=None):
 		print("Running gdalwarp")
 
 	gdalwarp(ifile,ofile)
+
+	xoff,yoff,xsize,ysize,nx,ny = map_func.find_map_trim(ofile,0,BORDER_OFFSET)
+	if xoff-BORDER_OFFSET != 0 or yoff-BORDER_OFFSET != 0 or xoff+xsize+BORDER_OFFSET-1 != nx or yoff+ysize+BORDER_OFFSET-1 != ny:
+		ifile = ofile
+		path = tempd + os.sep + "border"
+		if not os.path.isdir(path):
+			os.mkdir(path)
+		name, ext = os.path.splitext(os.path.basename(ifile))
+		ofile = path + os.sep + name + ext
+
+		if Verbose:
+			print("auto clip black border (%d,%d) and size (%d,%d) on image (%d,%d)" % (xoff,yoff,xsize,ysize,nx,ny))
+
+		clip(ifile,ofile,xoff,yoff,xsize,ysize,False)
+	else:
+		if Verbose:
+			print("a black border does not exist - skipping")
 
 	if Scale:
 		ifile = ofile
@@ -564,6 +648,7 @@ SORT_DIR=-1
 SQUARE_RATIO=1.2
 MAX_JPEG_SIZE=3000000
 BORDER_THRESHOLD=100
+BORDER_OFFSET=5
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))

@@ -90,16 +90,21 @@ On Linux we can use `xargs`:
 
 Because I don't want you to get lost, you should test that the generated kmz file displays correctly before you use it in the field.
 
+* Load the kmz into QGIS Desktop.  It will only import the kml file, and will display bounding boxes for all of the tiles.  If you keep the intermediate files `-k` you can also import the image in the `warped` subdirectory.  The bounding boxes from the kml file should overlap the warped image nicely.  You can also use the `QuickMapServices` plugin to load the OSM maps layer.  The features should overlap with the OSM map.
+
 * Load the kmz into Garmins's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to base map or creating a custom map using another method.
+
 * Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the basemap.
 
 Always have a backup navigation method in the field - electronic devices and batteries fail.
 
 ## Issues
 
-I've only tested this using Vicmap 25k products with my own Garmin eTrex 20x, your mileage may vary with other maps.
+I've tested this using Vicmap 25k products with my own Garmin eTrex 20x, your mileage may vary with other maps.  I've done some limited testing with NSW Spatial Services Georeferenced PDF Topographic Map Series and is now working.
 
-The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work is an option.
+The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap and NSW Spatial Services' products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work.
+
+The Vicmap neatline aligns with the outer gridlines, so works very well.  The neatline for the NSW Spatial Services does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify an alternative.
 
 # License
 
@@ -113,4 +118,7 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 * Download MParallel portable binary [here](https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip)
 * Download Linux Mint [here](https://linuxmint.com/download.php)
 * How to upload your custom maps and technical details from [Garmin](https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9)
+* NSW Spatial Services [Topographic Maps](https://www.spatial.nsw.gov.au/products_and_services/topographic_maps)
+* Vicmap Topographic Maps [portal](https://vicmaptopo.land.vic.gov.au/#/discover-map)
+
 
