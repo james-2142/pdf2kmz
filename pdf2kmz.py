@@ -343,7 +343,7 @@ def main(args=None):
 	if Nfile:
 		if not os.path.isfile(nfile):
 			Usage()
-			print("neatline file does not exist: %s" % ifile)
+			print("neatline file does not exist: %s" % nfile)
 			return 1
 
 	if (AutoClip and Srcwin) or (AutoClip and Projwin) or (Srcwin and Projwin):
