@@ -89,7 +89,7 @@ def clipbycutline(ifile,ofile,tempd,neatline):
 	else:
 		cutline = neatline
 
-	opt = gdal.WarpOptions(options="-crop_to_cutline -cutline %s"%cutline)
+	opt = gdal.WarpOptions(options="-crop_to_cutline -cutline \"%s\""%cutline)
 	gdal.PushErrorHandler('CPLQuietErrorHandler')
 	gdal.Warp(ofile,ds,options=opt)
 	gdal.PopErrorHandler();
@@ -410,7 +410,6 @@ def main(args=None):
 			print("temporary directory base is not an existing directory")
 			return 1
 
-	name, ext = os.path.splitext(os.path.basename(ifile))
 	tempd=""
 	tempd = create_tempdir(name,btmpdir)
 	
