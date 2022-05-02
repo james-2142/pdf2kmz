@@ -98,13 +98,15 @@ Because I don't want you to get lost, you should test that the generated kmz fil
 
 Always have a backup navigation method in the field - electronic devices and batteries fail.
 
-## Issues
+## Testnig Notes
 
-I've tested this using Vicmap 25k products with my own Garmin eTrex 20x, your mileage may vary with other maps.  I've done some limited testing with NSW Spatial Services Georeferenced PDF Topographic Map Series and is now working.
+I've tested this using Vicmap 25k products with BaseCamp and QGIS and with my own Garmin eTrex 20x.  I've tested with the NSW e-Topo 25k products with BaseCamp and QGIS.
 
-The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap and NSW Spatial Services' products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work.
+The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap and NSW e-Topo products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work.
 
-The Vicmap neatline aligns with the outer gridlines, so works very well.  The neatline for the NSW Spatial Services does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify an alternative.
+The Vicmap neatline aligns with the outer gridlines, so works very well at removing whitespace and legends.  The neatline for the NSW Se-Topo does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify one of the alternatives.
+
+Not all errors are handled gracefully at this stage.
 
 # License
 
