@@ -118,7 +118,7 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 * Download MParallel portable binary [here](https://github.com/lordmulder/MParallel/releases/download/1.0.4/mparallel.2016-06-08.bin-win64.zip)
 * Download Linux Mint [here](https://linuxmint.com/download.php)
 * How to upload your custom maps and technical details from [Garmin](https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9)
-* NSW Spatial Services [Topographic Maps](https://www.spatial.nsw.gov.au/products_and_services/topographic_maps)
+* NSW Spatial Services Topographic Maps [Six Maps e-Topo](https://maps.six.nsw.gov.au/etopo.html)
 * Vicmap Topographic Maps [portal](https://vicmaptopo.land.vic.gov.au/#/discover-map)
 
 
