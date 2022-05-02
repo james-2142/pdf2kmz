@@ -104,7 +104,7 @@ I've tested this using Vicmap 25k products with BaseCamp and QGIS and with my ow
 
 The auto-clipping feature `-c` tries to find the outer gridlines of the map and use that to clip.  It works well with the Vicmap and NSW e-Topo products, and may work with other maps.  Clip using the neatline (if available) if this doesn't work.
 
-The Vicmap neatline aligns with the outer gridlines, so works very well at removing whitespace and legends.  The neatline for the NSW Se-Topo does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify one of the alternatives.
+The Vicmap neatline aligns with the outer gridlines, so works very well at removing whitespace and legends.  The neatline for the NSW e-Topo does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify one of the alternatives.
 
 Not all errors are handled gracefully at this stage.
 
