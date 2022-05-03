@@ -136,7 +136,7 @@ def Usage():
 	print("")
 	print("PDF to TIF conversion options:")
 	print("       -d DPI|--dpi=DPI                  : tif output resolution (default=250)")
-	print("       -c | --convert_to_tif             : only convert PDF to TIF")
+	print("       -C | --convert_to_tif             : only convert PDF to TIF")
 	print("")
 	print("TIF to JPEG conversion options:")
 	print("       -q QUAL |--quality=QUAL           : JPEG quality (default=80)")
@@ -196,7 +196,7 @@ def main(args=None):
 	resample_mthds = ["nearest","average","rms","bilinear","cubic","cupicspline","lanczos","mode"]
 
 	try:
-		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:c"
+		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:C"
 		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif"]
 		opts, args = getopt.getopt(sys.argv[1:],short_args,long_args)
 	except getopt.GetoptError as err:
@@ -224,7 +224,7 @@ def main(args=None):
 			Force = True
 		elif o in ("-k","--keep"):
 			Keep = True
-		elif o in ("-c","--convert_to_tif"):
+		elif o in ("-C","--convert_to_tif"):
 			Tif = True
 		elif o in ("-d","--dpi"):
 			try:

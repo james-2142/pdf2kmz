@@ -55,7 +55,7 @@ Clip options:
 
 PDF to TIF conversion options:
        -d DPI|--dpi=DPI                  : tif output resolution (default=250)
-       -c | --convert_to_tif             : only convert PDF to TIF
+       -C | --convert_to_tif             : only convert PDF to TIF
 
 TIF to JPEG conversion options:
        -q QUAL |--quality=QUAL           : JPEG quality (default=80)
