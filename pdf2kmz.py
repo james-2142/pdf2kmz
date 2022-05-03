@@ -136,6 +136,7 @@ def Usage():
 	print("")
 	print("PDF to TIF conversion options:")
 	print("       -d DPI|--dpi=DPI                  : tif output resolution (default=250)")
+	print("       -c | --convert_to_tif             : only convert PDF to TIF")
 	print("")
 	print("TIF to JPEG conversion options:")
 	print("       -q QUAL |--quality=QUAL           : JPEG quality (default=80)")
@@ -189,13 +190,14 @@ def main(args=None):
 	tdir = ""
 	nfile = None
 	btmpdir = None
+	Tif = False
 	
 	gps_profiles = {'default':100, 'etrex': 100, 'montana':500, 'monterra':99, 'oregon':500,'gpsmap':500}
 	resample_mthds = ["nearest","average","rms","bilinear","cubic","cupicspline","lanczos","mode"]
 
 	try:
-		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:"
-		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile="]
+		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:c"
+		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif"]
 		opts, args = getopt.getopt(sys.argv[1:],short_args,long_args)
 	except getopt.GetoptError as err:
 			Usage()
@@ -222,6 +224,8 @@ def main(args=None):
 			Force = True
 		elif o in ("-k","--keep"):
 			Keep = True
+		elif o in ("-c","--convert_to_tif"):
+			Tif = True
 		elif o in ("-d","--dpi"):
 			try:
 				GDAL_PDF_DPI = int(a)
@@ -402,33 +406,54 @@ def main(args=None):
 			print("output file %s exists but is not a regular file" % kmzfile)
 			return 1
 
-	if Tdir:
-		if os.path.isdir(tdir):
-			btmpdir = os.path.realpath(tdir)
-		else:
-			Usage()
-			print("temporary directory base is not an existing directory")
-			return 1
+	if Tif:
+		ofile = odir + os.sep + name + ".tif"
+		if os.path.exists(ofile):
+			if os.path.isfile(ofile):
+				if not Force:
+					Usage()
+					print("output file %s exists, -f to force overwrite" % ofile)
+					return 1
+			else:
+				Usage()
+				print("output file %s exists but is not a regular file" % ofile)
+				return 1
+	else:
+		if Tdir:
+			if os.path.isdir(tdir):
+				btmpdir = os.path.realpath(tdir)
+			else:
+				Usage()
+				print("temporary directory base is not an existing directory")
+				return 1
 
-	tempd=""
-	tempd = create_tempdir(name,btmpdir)
+		tempd=""
+		tempd = create_tempdir(name,btmpdir)
 	
-	if Verbose:
-		print("Temporary directory: %s" % tempd )
+		if Verbose:
+			print("Temporary directory: %s" % tempd )
 
 	if ext.lower() == ".pdf":
-		path = tempd + os.sep + "tif"
-		if not os.path.isdir(path):
-			os.mkdir(path)
-		ofile = path + os.sep + name + ".tif"
+		if not Tif:
+			path = tempd + os.sep + "tif"
+			if not os.path.isdir(path):
+				os.mkdir(path)
+			ofile = path + os.sep + name + ".tif"
 	
 		if Verbose:
 			print("Coverting input pdf to tif with dpi = %d" % GDAL_PDF_DPI)
 
 		pdf2tif(ifile,ofile)
+		
+		if Tif:
+			return 1
 	elif ext.lower() in  (".tif", ".tiff"):
 		if Verbose:
-			print("Input file in tif format: %s" % ifile)
+			if Tif:
+				print("Input file already in tif format: %s" % ifile)
+				return 1
+			else:
+				print("Input file in tif format: %s" % ifile)
 		ofile = ifile
 
 	if AutoClip:
