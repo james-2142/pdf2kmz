@@ -48,12 +48,14 @@ Options:
 Clip options:
        -c|--clip                         : auto clip
        -n|--neatline                     : use embedded neatline to clip
+       -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip
        --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines
        --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates
        -b THRESH|--border THRESH         : border threshold for auto clipping (default=100,0-255)
 
 PDF to TIF conversion options:
        -d DPI|--dpi=DPI                  : tif output resolution (default=250)
+       -c | --convert_to_tif             : only convert PDF to TIF
 
 TIF to JPEG conversion options:
        -q QUAL |--quality=QUAL           : JPEG quality (default=80)

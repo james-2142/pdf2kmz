@@ -121,7 +121,7 @@ def Usage():
 	print("")
 	print("Options:")
 	print("       -i INPUT_FILE |--input=INPUT_FILE : pdf or tif file to convert to kmz")
-	print("       -o OUT_DIR |--outdir=OUT_DI       : output directory")
+	print("       -o OUT_DIR |--outdir=OUT_DIR      : output directory")
 	print("       -f|--force                        : force overwrite of output kmz file if it exists")
 	print("       -v|--verbose                      : increase verbosity")
 	print("       -h|--help                         : show this help message")
