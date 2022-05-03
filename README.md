@@ -100,7 +100,7 @@ Because I don't want you to get lost, you should test that the generated kmz fil
 
 Always have a backup navigation method in the field - electronic devices and batteries fail.
 
-## Testnig Notes
+## Testing Notes
 
 I've tested this using Vicmap 25k products with BaseCamp and QGIS and with my own Garmin eTrex 20x.  I've tested with the NSW e-Topo 25k products with BaseCamp and QGIS.
 
