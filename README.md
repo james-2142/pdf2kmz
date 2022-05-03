@@ -41,7 +41,7 @@ Usage: pdf2kmz.py \[options\]
 Options:
        -i INPUT_FILE |--input=INPUT_FILE : pdf or tif file to convert to kmz
        -o OUT_DIR |--outdir=OUT_DIR      : output directory
-       -f|--force                        : force overwrite of output kmz file if it exists
+       -f|--force                        : force overwrite of output kmz/tif file if it exists
        -v|--verbose                      : increase verbosity
        -h|--help                         : show this help message
 
