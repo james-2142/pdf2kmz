@@ -88,6 +88,15 @@ On Linux we can use `xargs`:
 
 `ls ./pdf/*.pdf | xargs -n 1 -P 2 -I {} python3 pdf2kmz.py -i ./pdf/{}`
 
+## Neatline file format
+
+The neatline file format is a csv that stores a polygon in WKT format to define the area to be clipped.   Below is an example that defines a closed polygon in UTM coordinates.
+
+```
+record,wkt
+1, "POLYGON ((315295.11 6236035.46, 338376.1 6236459.5, 338613.335 6222603.120, 315562.949 6222181.446, 315295.11 6236035.46))"
+```
+
 ## Testing
 
 Because I don't want you to get lost, you should test that the generated kmz file displays correctly before you use it in the field.
