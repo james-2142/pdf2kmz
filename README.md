@@ -117,6 +117,8 @@ The auto-clipping feature `-c` tries to find the outer gridlines of the map and 
 
 The Vicmap neatline aligns with the outer gridlines, so works very well at removing whitespace and legends.  The neatline for the NSW e-Topo does not align with the gridlines, and sits well outside, and isn't suitable for clipping.  Use the auto-clipping option or specify one of the alternatives.
 
+The sample Tasmap 50k TIF has been tested in QGIS and BaseCamp and looks ok.  The sample only includes a map, not any legend area, so the auto clip isn't much use.  The TIF also has a nodata value set to 256, which is outside the normal range - I'm unsure the consequences of this apart from the empty areas being white rather than black as with the Vic and NSW maps.
+
 Not all errors are handled gracefully at this stage.
 
 # License
