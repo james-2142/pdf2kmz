@@ -36,7 +36,7 @@ There are plenty of options to refine the conversion, including clipping, tiling
 
 ```
 python3 pdf2kmz.py -h
-Usage: pdf2kmz.py \[options\]
+Usage: pdf2kmz.py [options]
 
 Options:
        -i INPUT_FILE |--input=INPUT_FILE : pdf or tif file to convert to kmz
