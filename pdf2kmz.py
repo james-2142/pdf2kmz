@@ -132,7 +132,8 @@ def Usage():
 	print("       -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip")
 	print("       --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines")
 	print("       --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates")
-	print("       -b THRESH|--border THRESH         : border threshold for auto clipping (default=100,0-255)")
+	print("       -b THRESH |--border THRESH        : border threshold for auto clipping (default=100,0-255)")
+	print("       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)") 
 	print("")
 	print("PDF to TIF conversion options:")
 	print("       -d DPI|--dpi=DPI                  : tif output resolution (default=250)")
@@ -196,8 +197,8 @@ def main(args=None):
 	resample_mthds = ["nearest","average","rms","bilinear","cubic","cupicspline","lanczos","mode"]
 
 	try:
-		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:C"
-		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif"]
+		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:CB:"
+		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif","black-border="]
 		opts, args = getopt.getopt(sys.argv[1:],short_args,long_args)
 	except getopt.GetoptError as err:
 			Usage()
@@ -330,6 +331,17 @@ def main(args=None):
 			except:
 				Usage()
 				print("border threshold must be an integer")
+				return 1
+		elif o in ("-B","--black-border"):
+			try:
+				BORDER_OFFSET = int(a)
+				if BORDER_OFFSET < 0:
+					Usage()
+					print("black border offset must be greater than 0")
+					return 1
+			except:
+				Usage()
+				print("black border offset must be an integer")
 				return 1
 		else:
 			Usage()
