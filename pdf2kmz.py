@@ -32,10 +32,10 @@ def cleanup_tempdir(tempd,keep):
 		shutil.rmtree(tempd)
 
 #gdalwarp
-def gdalwarp(ifile,ofile):
+def gdalwarp(ifile,ofile,nodata):
 	src = gdal.Open(ifile)
 	# EPSG:54004 == EPSG:3395
-	opt = gdal.WarpOptions(dstSRS="EPSG:3395", resampleAlg="near")
+	opt = gdal.WarpOptions(dstSRS="EPSG:3395", resampleAlg="near",  dstNodata=nodata)
 	gdal.Warp(ofile,src,options=opt)
 
 #gdal_retile
@@ -122,13 +122,13 @@ def Usage():
 	print("Options:")
 	print("       -i INPUT_FILE |--input=INPUT_FILE : pdf or tif file to convert to kmz")
 	print("       -o OUT_DIR |--outdir=OUT_DIR      : output directory")
-	print("       -f|--force                        : force overwrite of output kmz/tif file if it exists")
-	print("       -v|--verbose                      : increase verbosity")
-	print("       -h|--help                         : show this help message")
+	print("       -f | --force                      : force overwrite of output kmz/tif file if it exists")
+	print("       -v | --verbose                    : increase verbosity")
+	print("       -h | --help                       : show this help message")
 	print("")
 	print("Clip options:")
-	print("       -c|--clip                         : auto clip")
-	print("       -n|--neatline                     : use embedded neatline to clip")
+	print("       -c | --clip                       : auto clip")
+	print("       -n | --neatline                   : use embedded neatline to clip")
 	print("       -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip")
 	print("       --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines")
 	print("       --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates")
@@ -136,26 +136,29 @@ def Usage():
 	print("       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)") 
 	print("")
 	print("PDF to TIF conversion options:")
-	print("       -d DPI|--dpi=DPI                  : tif output resolution (default=250)")
+	print("       -d DPI |--dpi=DPI                 : tif output resolution (default=250)")
 	print("       -C | --convert_to_tif             : only convert PDF to TIF")
 	print("")
 	print("TIF to JPEG conversion options:")
-	print("       -q QUAL |--quality=QUAL           : JPEG quality (default=80)")
+	print("       -q QUAL | --quality=QUAL          : JPEG quality (default=80)")
 	print("")
 	print("Tiling options:")
-	print("       -m NUM|--maxtiles=NUM             : maximum number of tiles (default=100)")
-	print("       -r RES|--maxtileres=RES           : maximum tile resolution (default=1048576)")
-	print("       -p PROFILE|--profile=PROFILE      : gps profile to use (default, etrex, montana, monterra, oregon, gpsmap)")
-	print("       -M|--mintilesize                  : use the smallest (default=largest) tile size within constraints")
-	print("       -S RATIO|--squareratio=RATIO      : only select candidate tilings that have this ratio or less (default=1.2)")
+	print("       -m NUM | --maxtiles=NUM           : maximum number of tiles (default=100)")
+	print("       -r RES | --maxtileres=RES         : maximum tile resolution (default=1048576)")
+	print("       -p PROFILE | --profile=PROFILE    : gps profile to use (default, etrex, montana, monterra, oregon, gpsmap)")
+	print("       -M | --mintilesize                : use the smallest (default=largest) tile size within constraints")
+	print("       -S RATIO | --squareratio=RATIO    : only select candidate tilings that have this ratio or less (default=1.2)")
 	print("")
 	print("Scaling options:")
-	print("       -s SCALE|--scale=SCALE            : percentage to scale the image")
-	print("       -a ALG|--algorithm=ALG            : resampling algorithm (default=lanczos)")
+	print("       -s SCALE | --scale=SCALE          : percentage to scale the image")
+	print("       -a ALG | --algorithm=ALG          : resampling algorithm (default=lanczos)")
+	print("")
+	print("Warp options:")
+	print("       -R | --remove-nodata              : remove nodata attribute")
 	print("")
 	print("Temporary directory options:")
-	print("       -t TEMP|--tmpdir=TEMP             : temporary directory")
-	print("       -k|--keep                         : keep temporary files")
+	print("       -t TEMP | --tmpdir=TEMP           : temporary directory")
+	print("       -k | --keep                       : keep temporary files")
 	print("")
 
 def main(args=None):
@@ -170,6 +173,7 @@ def main(args=None):
 	global MAX_JPEG_SIZE
 	global BORDER_THRESHOLD
 	global BORDER_OFFSET
+	global WARP_NODATA
 	
 	Timing = False
 	Ifile = False
@@ -197,8 +201,8 @@ def main(args=None):
 	resample_mthds = ["nearest","average","rms","bilinear","cubic","cupicspline","lanczos","mode"]
 
 	try:
-		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:CB:"
-		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif","black-border="]
+		short_args = "-hi:o:fkd:q:cnm:r:vp:s:a:t:MS:b:N:CB:R"
+		long_args = ["help","input=","outdir=","force","keep","dpi=","quality=","clip","neatline","maxtiles=","maxtileres=","verbose","profile=","scale=","algorithm=","tmpdir=","mintilesize","squareratio=","border=","srcwin=","projwin=","nfile=","convert_to_tif","black-border=","remove-nodata"]
 		opts, args = getopt.getopt(sys.argv[1:],short_args,long_args)
 	except getopt.GetoptError as err:
 			Usage()
@@ -343,6 +347,8 @@ def main(args=None):
 				Usage()
 				print("black border offset must be an integer")
 				return 1
+		elif o in ("-R", "--remove-nodata"):
+			WARP_NODATA="None"
 		else:
 			Usage()
 			print("unknown option",o,a)
@@ -565,7 +571,7 @@ def main(args=None):
 	if Verbose:
 		print("Running gdalwarp")
 
-	gdalwarp(ifile,ofile)
+	gdalwarp(ifile,ofile,WARP_NODATA)
 
 	xoff,yoff,xsize,ysize,nx,ny = map_func.find_map_trim(ofile,0,BORDER_OFFSET)
 	if xoff-BORDER_OFFSET != 0 or yoff-BORDER_OFFSET != 0 or xoff+xsize+BORDER_OFFSET-1 != nx or yoff+ysize+BORDER_OFFSET-1 != ny:
@@ -685,6 +691,7 @@ SQUARE_RATIO=1.2
 MAX_JPEG_SIZE=3000000
 BORDER_THRESHOLD=100
 BORDER_OFFSET=5
+WARP_NODATA=None
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))

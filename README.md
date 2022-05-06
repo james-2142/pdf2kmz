@@ -41,13 +41,13 @@ Usage: pdf2kmz.py [options]
 Options:
        -i INPUT_FILE |--input=INPUT_FILE : pdf or tif file to convert to kmz
        -o OUT_DIR |--outdir=OUT_DIR      : output directory
-       -f|--force                        : force overwrite of output kmz/tif file if it exists
-       -v|--verbose                      : increase verbosity
-       -h|--help                         : show this help message
+       -f | --force                      : force overwrite of output kmz/tif file if it exists
+       -v | --verbose                    : increase verbosity
+       -h | --help                       : show this help message
 
 Clip options:
-       -c|--clip                         : auto clip
-       -n|--neatline                     : use embedded neatline to clip
+       -c | --clip                       : auto clip
+       -n | --neatline                   : use embedded neatline to clip
        -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip
        --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines
        --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates
@@ -55,26 +55,29 @@ Clip options:
        -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)
 
 PDF to TIF conversion options:
-       -d DPI|--dpi=DPI                  : tif output resolution (default=250)
+       -d DPI |--dpi=DPI                 : tif output resolution (default=250)
        -C | --convert_to_tif             : only convert PDF to TIF
 
 TIF to JPEG conversion options:
-       -q QUAL |--quality=QUAL           : JPEG quality (default=80)
+       -q QUAL | --quality=QUAL          : JPEG quality (default=80)
 
 Tiling options:
-       -m NUM|--maxtiles=NUM             : maximum number of tiles (default=100)
-       -r RES|--maxtileres=RES           : maximum tile resolution (default=1048576)
-       -p PROFILE|--profile=PROFILE      : gps profile to use (default, etrex, montana, monterra, oregon, gpsmap)
-       -M|--mintilesize                  : use the smallest (default=largest) tile size within constraints
-       -S RATIO|--squareratio=RATIO      : only select candidate tilings that have this ratio or less (default=1.2)
+       -m NUM | --maxtiles=NUM           : maximum number of tiles (default=100)
+       -r RES | --maxtileres=RES         : maximum tile resolution (default=1048576)
+       -p PROFILE | --profile=PROFILE    : gps profile to use (default, etrex, montana, monterra, oregon, gpsmap)
+       -M | --mintilesize                : use the smallest (default=largest) tile size within constraints
+       -S RATIO | --squareratio=RATIO    : only select candidate tilings that have this ratio or less (default=1.2)
 
 Scaling options:
-       -s SCALE|--scale=SCALE            : percentage to scale the image
-       -a ALG|--algorithm=ALG            : resampling algorithm (default=lanczos)
+       -s SCALE | --scale=SCALE          : percentage to scale the image
+       -a ALG | --algorithm=ALG          : resampling algorithm (default=lanczos)
+
+Warp options:
+       -R | --remove-nodata              : remove nodata attribute
 
 Temporary directory options:
-       -t TEMP|--tmpdir=TEMP             : temporary directory
-       -k|--keep                         : keep temporary files
+       -t TEMP | --tmpdir=TEMP           : temporary directory
+       -k | --keep                       : keep temporary files
 ```
 
 ## Running in parallel
