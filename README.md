@@ -123,6 +123,8 @@ The Vicmap neatline aligns with the outer gridlines, so works very well at remov
 
 The sample Tasmap 50k TIF has been tested in QGIS and BaseCamp and looks ok.  The sample only includes a map, not any legend area, so the auto clip isn't much use.  The TIF also has a nodata value set to 256, which is outside the normal range - I'm unsure the consequences of this apart from the empty areas being white rather than black as with the Vic and NSW maps.
 
+A couple of USGS maps have been tested and load correctly in QGIS and BaseCamp.  The neatline with these maps is useful for clipping ( as with the NSW topo maps), tough auto clipping works well.
+
 Not all errors are handled gracefully at this stage.
 
 # License
@@ -139,5 +141,6 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 * How to upload your custom maps and technical details from [Garmin](https://support.garmin.com/en-AU/?faq=cVuMqGHWaM7wTFWMkPNLN9)
 * NSW Spatial Services Topographic Maps [Six Maps e-Topo](https://maps.six.nsw.gov.au/etopo.html)
 * Vicmap Topographic Maps [portal](https://vicmaptopo.land.vic.gov.au/#/discover-map)
+* USGS GeoPDFs can be downloaded from [here](https://store.usgs.gov/map-locator)
 
 
