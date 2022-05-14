@@ -132,7 +132,7 @@ def Usage():
 	print("       -N NEATFILE |--nfile=NEATFILE     : use neatline csv file to clip")
 	print("       --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines")
 	print("       --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates")
-	print("       -b THRESH |--border THRESH        : border threshold for auto clipping (default=100,0-255)")
+	print("       -b PIXELS |--border PIXELS        : additional pixels to remove when auto clipping (default=5)")
 	print("       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)") 
 	print("")
 	print("PDF to TIF conversion options:")
@@ -171,7 +171,7 @@ def main(args=None):
 	global SORT_DIR
 	global SQUARE_RATIO
 	global MAX_JPEG_SIZE
-	global BORDER_THRESHOLD
+	global CLIP_OFFSET
 	global BORDER_OFFSET
 	global WARP_NODATA
 	
@@ -327,14 +327,14 @@ def main(args=None):
 				return 1
 		elif o in ("-b","--border"):
 			try:
-				BORDER_THRESHOLD = int(a)
-				if BORDER_THRESHOLD < 0 or BORDER_THRESHOLD > 255:
+				CLIP_OFFSET = int(a)
+				if CLIP_OFFSET < 0:
 					Usage()
-					print("border threshold must be between 0 and 255")
+					print("auto clip border offset must be greater than 0")
 					return 1
 			except:
 				Usage()
-				print("border threshold must be an integer")
+				print("auto clip border offset must be an integer")
 				return 1
 		elif o in ("-B","--black-border"):
 			try:
@@ -483,9 +483,9 @@ def main(args=None):
 		ofile = path + os.sep + name + ext
 
 		if Verbose:
-			print("Using auto clip with threshold=%d" % BORDER_THRESHOLD)
+			print("Using auto clip with offset=%d" % CLIP_OFFSET)
 
-		xoff, yoff, xsize, ysize = map_func.find_map_extent(ifile,BORDER_THRESHOLD)
+		xoff, yoff, xsize, ysize = map_func.find_map_extent(ifile,CLIP_OFFSET)
 
 		if Verbose:
 			print("auto clip offset (%d,%d) and size (%d,%d)" % (xoff,yoff,xsize,ysize))
@@ -689,7 +689,7 @@ RESAMPLE_ALG="lanczos"
 SORT_DIR=-1
 SQUARE_RATIO=1.2
 MAX_JPEG_SIZE=3000000
-BORDER_THRESHOLD=100
+CLIP_OFFSET=5
 BORDER_OFFSET=5
 WARP_NODATA=None
 
