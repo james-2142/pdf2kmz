@@ -123,7 +123,11 @@ The Vicmap neatline aligns with the outer gridlines, so works very well at remov
 
 The sample Tasmap 50k TIF has been tested in QGIS and BaseCamp and looks ok.  The sample only includes a map, not any legend area, so the auto clip isn't much use.  The TIF also has a nodata value set to 256, which is outside the normal range - I'm unsure the consequences of this apart from the empty areas being white rather than black as with the Vic and NSW maps.
 
-A couple of USGS maps have been tested and load correctly in QGIS and BaseCamp.  The neatline with these maps is useful for clipping ( as with the NSW topo maps), tough auto clipping works well.
+A couple of USGS maps have been tested and load correctly in QGIS and BaseCamp.  The neatline with these maps is not useful for clipping ( as with the NSW topo maps), tough auto clipping works well.
+
+Some WYO Parks ORV GeoPDF maps have been tested in QGIS and BaseCamp and load correctly.
+
+The U.S Bureau of Land Management has some GeoPDFs.  These maps are a little different in having a black background outside the map.  The neatline is correctly position and will clip correctly.  Tested in QGIS and BaseCamp.
 
 Not all errors are handled gracefully at this stage.
 
@@ -142,5 +146,6 @@ pdf2kmz is licensed under the MIT License - see [LICENSE](LICENSE)
 * NSW Spatial Services Topographic Maps [Six Maps e-Topo](https://maps.six.nsw.gov.au/etopo.html)
 * Vicmap Topographic Maps [portal](https://vicmaptopo.land.vic.gov.au/#/discover-map)
 * USGS GeoPDFs can be downloaded from [here](https://store.usgs.gov/map-locator)
-
+* WYO Parks GeoPDF for ORV use can be found [here](https://wyoparks.wyo.gov/index.php/orv-trails/orv-maps)
+* U.S Bureau of Land Management GeoPDF [maps](https://www.blm.gov/maps/georeferenced-PDFs)
 
