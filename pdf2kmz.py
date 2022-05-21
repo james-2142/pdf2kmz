@@ -412,17 +412,18 @@ def main(args=None):
 	if Verbose:
 		print("Output directory = %s" % odir)
 
-	kmzfile = odir + os.sep + name + ".kmz"
-	if os.path.exists(kmzfile):
-		if os.path.isfile(kmzfile):
-			if not Force:
+	if not Tif:
+		kmzfile = odir + os.sep + name + ".kmz"
+		if os.path.exists(kmzfile):
+			if os.path.isfile(kmzfile):
+				if not Force:
+					Usage()
+					print("output file %s exists, -f to force overwrite" % kmzfile)
+					return 1
+			else:
 				Usage()
-				print("output file %s exists, -f to force overwrite" % kmzfile)
+				print("output file %s exists but is not a regular file" % kmzfile)
 				return 1
-		else:
-			Usage()
-			print("output file %s exists but is not a regular file" % kmzfile)
-			return 1
 
 	if Tif:
 		ofile = odir + os.sep + name + ".tif"
