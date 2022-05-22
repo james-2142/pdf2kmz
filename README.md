@@ -52,7 +52,7 @@ Clip options:
        --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines
        --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates
        -b PIXELS |--border PIXELS        : additional pixels to remove when auto clipping (default=5)
-       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)
+       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when clipping the black border (default=5)
 
 PDF to TIF conversion options:
        -d DPI |--dpi=DPI                 : tif output resolution (default=250)
@@ -107,9 +107,9 @@ Because I don't want you to get lost, you should test that the generated kmz fil
 
 * Load the kmz into QGIS Desktop.  It will only import the kml file, and will display bounding boxes for all of the tiles.  If you keep the intermediate files `-k` you can also import the image in the `warped` subdirectory.  The bounding boxes from the kml file should overlap the warped image nicely.  You can also use the `QuickMapServices` plugin to load the OSM maps layer.  The features should overlap with the OSM map.
 
-* Load the kmz into Garmins's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to base map or creating a custom map using another method.
+* Load the kmz into Garmin's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to base map or creating a custom map using another method.
 
-* Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the basemap.
+* Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the BaseCamp.
 
 Always have a backup navigation method in the field - electronic devices and batteries fail.
 
@@ -123,7 +123,7 @@ The Vicmap neatline aligns with the outer gridlines, so works very well at remov
 
 The sample Tasmap 50k TIF has been tested in QGIS and BaseCamp and looks ok.  The sample only includes a map, not any legend area, so the auto clip isn't much use.  The TIF also has a nodata value set to 256, which is outside the normal range - I'm unsure the consequences of this apart from the empty areas being white rather than black as with the Vic and NSW maps.
 
-A couple of USGS maps have been tested and load correctly in QGIS and BaseCamp.  The neatline with these maps is not useful for clipping ( as with the NSW topo maps), tough auto clipping works well.
+A couple of USGS maps have been tested and load correctly in QGIS and BaseCamp.  The neatline with these maps is not useful for clipping ( as with the NSW topo maps), though auto clipping works well.
 
 Some WYO Parks ORV GeoPDF maps have been tested in QGIS and BaseCamp and load correctly.
 

@@ -133,7 +133,7 @@ def Usage():
 	print("       --srcwin xoff,yoff,xsize,ysize    : subwindow to clip in pixels/lines")
 	print("       --projwin ulx,uly,lrx,lry         : subwindow to clip in georeferenced coordinates")
 	print("       -b PIXELS |--border PIXELS        : additional pixels to remove when auto clipping (default=5)")
-	print("       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when cliiping the black border (default=5)") 
+	print("       -B PIXELS | -black-border=PIXELS  : additional pixels to remove when clipping the black border (default=5)") 
 	print("")
 	print("PDF to TIF conversion options:")
 	print("       -d DPI |--dpi=DPI                 : tif output resolution (default=250)")
