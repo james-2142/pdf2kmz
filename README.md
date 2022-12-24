@@ -107,9 +107,9 @@ Because I don't want you to get lost, you should test that the generated kmz fil
 
 * Load the kmz into QGIS Desktop.  It will only import the kml file, and will display bounding boxes for all of the tiles.  If you keep the intermediate files `-k` you can also import the image in the `warped` subdirectory.  The bounding boxes from the kml file should overlap the warped image nicely.  You can also use the `QuickMapServices` plugin to load the OSM maps layer.  The features should overlap with the OSM map.
 
-* Load the kmz into Garmin's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to base map or creating a custom map using another method.
+* Load the kmz into Garmin's BaseCamp software and verify that the map is oriented as it should.  You can do this by comparing it to the base map or creating a custom map using another method.
 
-* Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the BaseCamp.
+* Load the custom map onto you GPS, then zoom and pan until you can see the map.  Verify that it is oriented correctly against the base map.
 
 Always have a backup navigation method in the field - electronic devices and batteries fail.
 
