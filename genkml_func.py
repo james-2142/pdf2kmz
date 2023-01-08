@@ -2,14 +2,9 @@
 
 import os
 import fnmatch
-try:
-	from osgeo import gdal
-	from osgeo import ogr
-	from osgeo import osr
-except:
-	import gdal
-	import ogr
-	import osr
+from osgeo import gdal
+from osgeo import ogr
+from osgeo import osr
 
 def genkml(ipath,tgt_epsg):
 	topo, ext = os.path.splitext(os.path.basename(ipath))

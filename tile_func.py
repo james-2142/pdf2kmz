@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
 import os, sys
-try:
-	from osgeo import gdal
-except:
-	import gdal
+from osgeo import gdal
 
 def find_tiles(xp,xtiles):
 	div = 1
