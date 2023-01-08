@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import zipfile, os
 
 def genkmz(of,ipath):

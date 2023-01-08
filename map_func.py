@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 from PIL import Image
 import numpy as np
