@@ -1,7 +1,6 @@
 import os
 import fnmatch
 from osgeo import gdal
-from osgeo import ogr
 from osgeo import osr
 
 def genkml(ipath,tgt_epsg):
