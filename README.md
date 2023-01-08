@@ -3,26 +3,21 @@ pdf2kmz is a small collection of python scripts that convert a GeoPDF or GeoTIF 
 
 ## Dependencies
 
-pdf2kmz requires Python, the GDAP-python bindings and the GDAL scripts to run.
+pdf2kmz requires Python and the GDAL-python bindings to run.
 
 On Windows 10, QGIS Standalone Installer can be used to install the required dependencies.  This is the recommended method. Versions 2.18.18, 3.18.2 & 3.24.1 have been tested to work.
 
 OSGeo4W Network Installer can also be used to install the necessary dependencies if a custom install of QGIS/OSGeo4W is required.
 
-Under Linux, Linux Mint 20.2 has been tested which will require the following installed:
+Under Linux, Linux Mint 20.2 & 21.1 has been tested, which will require the following packages installed:
 - Python3
 - Python3-gdal
-- Gdal-bin
 
 ## Installation
 
 The scripts don't need to be installed anywhere specific, just download a zip file of the repository or clone it to your local machine.
 
 ## How to run
-
-Under Linux, `PYTHONPATH` should be set to the location where `gdal_retile.py` is found, eg:
-
-`export PYTHONPATH=/usr/bin`
 
 To convert a GeoPDF or GeoTIF file to kmz:
 
